@@ -75,16 +75,13 @@ const gameMethods = (() => {
         gameBoard.board[element[2] - 1] == "X"
       ) {
         prompt(player1.name + " wins!!")
-        gameBoard.printDom();
       } else if (
         gameBoard.board[element[0] - 1] == "O" &&
         gameBoard.board[element[1] - 1] == "O" &&
         gameBoard.board[element[2] - 1] == "O"
       ) {
-        gameBoard.printDom();
         prompt(player2.name + " win!!!")
       } else if (drawStatus === true) {
-        gameBoard.printDom();
         prompt("its a draw")
       }
     });
@@ -102,3 +99,4 @@ const gameMethods = (() => {
   return { putMarker, checkForWin, checkDraw, player1, player2,drawStatus };
 })();
 gameBoard.getDomBoard();
+
