@@ -1,7 +1,6 @@
-const factoryPlayers = (player, mark, turn) => {
-  return { player, mark, turn };
+const factoryPlayers = (player, mark, turn,name) => {
+  return { player, mark, turn,name };
 };
-
 const gameBoard = (() => {
   const board = ["", "", "", "", "", "", "", "", ""];
   const domBoard = [];
@@ -35,16 +34,9 @@ const gameBoard = (() => {
   return { getDomBoard, printDom, board };
 })();
 
-
-
-
-
- 
-
-
 const gameMethods = (() => {
-  const player1 = factoryPlayers("player1", "X", true);
-  const player2 = factoryPlayers("player2", "O", false);
+  const player1 = factoryPlayers("player1", "X", true,"player1");
+  const player2 = factoryPlayers("player2", "O", false,"player2");
   let drawStatus = true
   const putMarker = (index, player) => {
     let marker = player.mark;
@@ -82,18 +74,18 @@ const gameMethods = (() => {
         gameBoard.board[element[1] - 1] == "X" &&
         gameBoard.board[element[2] - 1] == "X"
       ) {
-        gameBoard.board.fill("");
+        prompt(player1.name + " wins!!")
         gameBoard.printDom();
       } else if (
         gameBoard.board[element[0] - 1] == "O" &&
         gameBoard.board[element[1] - 1] == "O" &&
         gameBoard.board[element[2] - 1] == "O"
       ) {
-        gameBoard.board.fill("");
         gameBoard.printDom();
+        prompt(player2.name + " win!!!")
       } else if (drawStatus === true) {
-        gameBoard.board.fill("");
         gameBoard.printDom();
+        prompt("its a draw")
       }
     });
   };
