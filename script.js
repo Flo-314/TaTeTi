@@ -20,9 +20,7 @@ const gameBoard = (() => {
         } else {
           player = player2;
         }
-        console.log(index);
-        console.log(player);
-        console.log(player1);
+
         putMarker(index + 1, player);
       });
       domBoard.push(element);
@@ -49,23 +47,36 @@ const gameBoard = (() => {
         player2.turn = false;
       }
     }
-    checkForWin()
+    checkForWin();
   };
 
   function checkForWin() {
-/*   
-[1,2,3]
-[4,5,6]     
-[7,8,9]
+    const winningCombinations = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+      [1, 4, 7],
+      [2, 5, 8],
+      [3, 6, 9],
+      [1, 5, 9],
+      [3, 5, 7], 
+    ];
+    winningCombinations.forEach((element) => {
+if(board[element[0] -1] == "X" && board[element[1] -1] =="X" && board[element[2] -1] == "X"){
+  board.fill("")
+  printDom()
+}
+else if((board[element[0] -1] == "O" && board[element[1] -1] =="O" && board[element[2] -1] == "O")){
+board.fill("")
+printDom()
+}
 
-[1,4,7]
-[2,5,8]
-[3,6,8]
-
-[1,5,9]
-[3,5,7]
-*/
+ })
   }
-  return { getDomBoard, printDom, putMarker, checkForWin };
+  return { getDomBoard, printDom, putMarker, checkForWin,board };
 })();
 gameBoard.getDomBoard();
+
+//Player Factory
+//GameBoard
+//Play Functions
