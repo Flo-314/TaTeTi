@@ -35,8 +35,8 @@ const gameBoard = (() => {
 })();
 
 const gameMethods = (() => {
-  const player1 = factoryPlayers("player1", "X", true, "player1");
-  const player2 = factoryPlayers("player2", "O", false, "player2");
+  const player1 = factoryPlayers("player1", "X", true, "You");
+  const player2 = factoryPlayers("player2", "O", false, "Computer");
   let drawStatus = true;
   const putMarker = (index, player) => {
     let marker = player.mark;
