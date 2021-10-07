@@ -1,14 +1,14 @@
-const factoryPlayers = (player, mark, turn,name) => {
-  return { player, mark, turn,name };
+const factoryPlayers = (player, mark, turn, name) => {
+  return { player, mark, turn, name };
 };
 const gameBoard = (() => {
   const board = ["", "", "", "", "", "", "", "", ""];
   const domBoard = [];
-  const button = document.querySelector("#restartBtn")
-  button.addEventListener("click", () =>{
+  const button = document.querySelector("#restartBtn");
+  button.addEventListener("click", () => {
     board.fill("");
     printDom();
-  })
+  });
   const getDomBoard = () => {
     let allBoard = document.querySelectorAll(".board");
     allBoard.forEach((element, index) => {
@@ -35,9 +35,9 @@ const gameBoard = (() => {
 })();
 
 const gameMethods = (() => {
-  const player1 = factoryPlayers("player1", "X", true,"player1");
-  const player2 = factoryPlayers("player2", "O", false,"player2");
-  let drawStatus = true
+  const player1 = factoryPlayers("player1", "X", true, "player1");
+  const player2 = factoryPlayers("player2", "O", false, "player2");
+  let drawStatus = true;
   const putMarker = (index, player) => {
     let marker = player.mark;
     if (gameBoard.board[index - 1] == "") {
@@ -47,12 +47,20 @@ const gameMethods = (() => {
       if (player == player1) {
         player2.turn = true;
         player1.turn = false;
+        checkForWin();
+
+        ia.randomMove()
+        checkForWin();
+
       } else {
         player1.turn = true;
         player2.turn = false;
+        checkForWin();
+
       }
     }
-    checkForWin();
+
+    
   };
 
   const checkForWin = () => {
@@ -68,35 +76,63 @@ const gameMethods = (() => {
     ];
     winningCombinations.forEach((element) => {
       drawStatus = true;
-      checkDraw()
+      checkDraw();
       if (
         gameBoard.board[element[0] - 1] == "X" &&
         gameBoard.board[element[1] - 1] == "X" &&
         gameBoard.board[element[2] - 1] == "X"
       ) {
-        prompt(player1.name + " wins!!")
+        alert(player1.name + " wins!!");
+        player1.turn = true;
+        player2.turn = false;
+        gameBoard.board.fill("");
+        gameBoard.printDom();
       } else if (
         gameBoard.board[element[0] - 1] == "O" &&
         gameBoard.board[element[1] - 1] == "O" &&
         gameBoard.board[element[2] - 1] == "O"
       ) {
-        prompt(player2.name + " win!!!")
+        alert(player2.name + " win!!!");
+        player1.turn = true;
+        player2.turn = false;
+        gameBoard.board.fill("");
+        gameBoard.printDom();
+        
       } else if (drawStatus === true) {
-        prompt("its a draw")
+        alert("its a draw");
+        player1.turn = true;
+        player2.turn = false;
+        gameBoard.board.fill("");
+        gameBoard.printDom();
       }
     });
+    
   };
   const checkDraw = () => {
     for (let i = 0; i < 9; i++) {
       const element = gameBoard.board[i];
-        if(element == ""){
-          drawStatus = false
-        }
+      if (element == "") {
+        drawStatus = false;
+      }
     }
-  }; 
+  };
 
-
-  return { putMarker, checkForWin, checkDraw, player1, player2,drawStatus };
+  return { putMarker, checkForWin, checkDraw, player1, player2, drawStatus };
 })();
 gameBoard.getDomBoard();
 
+const ia = (() => {
+  const getRandomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min) + min);
+  };
+  const randomMove = () => {
+    let randomNumber = getRandomNumber(0, 8);
+    let board = gameBoard.board
+    if(gameMethods.player2.turn == true){
+   while (board[randomNumber] !== "") {
+    randomNumber = getRandomNumber(0, 8);
+   }
+    gameMethods.putMarker(randomNumber +1, gameMethods.player2);
+  };}
+  return { randomMove, getRandomNumber};
+})();
